@@ -4,7 +4,9 @@ import re
 from hashlib import sha1
 from pagarme.resources.handler_request import KEYS
 
-
+"""
+Ex: validarPostback(signature, request.body, api_key)
+"""
 def validate(signature, payload, api_key=None):
     if api_key is None:
         key = KEYS['api_key'] if 'api_key' in KEYS else None
@@ -12,7 +14,6 @@ def validate(signature, payload, api_key=None):
         key = api_key
 
     signature = re.sub('sha1=', '', signature)
-    payload = payload.encode('utf-8')
 
     if key not in(None, ''):
         hashed = hmac.new(key.encode(), payload, sha1)
